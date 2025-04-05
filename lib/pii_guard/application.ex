@@ -11,10 +11,10 @@ defmodule PiiGuard.Application do
       PiiGuardWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:pii_guard, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: PiiGuard.PubSub},
-      # Start a worker by calling: PiiGuard.Worker.start_link(arg)
-      # {PiiGuard.Worker, arg},
-      # Start to serve requests, typically the last entry
-      PiiGuardWeb.Endpoint
+      # Start the Endpoint (http/https)
+      PiiGuardWeb.Endpoint,
+      # Start the Slack supervisor
+      {Slack.Supervisor, Application.fetch_env!(:pii_guard, PiiGuard.SlackBot)}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

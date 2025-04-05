@@ -37,7 +37,15 @@ defmodule PiiGuard.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      # Slack integration
+      {:slack_elixir, "~> 1.2.0"},
+      # OpenAI integration for PII detection
+      {:openai, "~> 0.6.2"},
+      # HTTP client for API calls
+      {:httpoison, "~> 2.2.2"},
+      # For handling JSON
+      {:poison, "~> 6.0"}
     ]
   end
 
