@@ -7,5 +7,11 @@ defmodule PiiGuardWeb.Router do
 
   scope "/api", PiiGuardWeb do
     pipe_through :api
+
+    # Health check endpoint
+    get "/health", HealthController, :check
+
+    # Data update webhook endpoint
+    post "/data-updates", DataUpdateController, :handle_update
   end
 end

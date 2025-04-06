@@ -49,58 +49,29 @@ if config_env() == :prod do
       port: port
     ],
     secret_key_base: secret_key_base
-
-  # Configure Slack
-  config :pii_guard, PiiGuard.SlackBot,
-    app_token: System.get_env("SLACK_APP_TOKEN"),
-    bot_token: System.get_env("SLACK_BOT_TOKEN"),
-    user_token: System.get_env("SLACK_USER_TOKEN"),
-    bot: PiiGuard.SlackBot,
-    channels: [
-      types: ["public_channel"]
-    ],
-    # List of channels to monitor for PII (comma-separated)
-    monitored_channels: System.get_env("MONITORED_SLACK_CHANNELS", "")
-
-  config :openai,
-    # find it at https://platform.openai.com/account/api-keys
-    api_key: System.get_env("OPENAI_API_KEY"),
-    # find it at https://platform.openai.com/account/org-settings under "Organization ID"
-    organization_key: System.get_env("OPENAI_ORGANIZATION_KEY"),
-    # optional, use when required by an OpenAI API beta, e.g.:
-    beta: "assistants=v1",
-    # optional, passed to [HTTPoison.Request](https://hexdocs.pm/httpoison/HTTPoison.Request.html) options
-    http_options: [recv_timeout: 30_000]
-
-  # ## SSL Support
-  #
-  # To get SSL working, you will need to add the `https` key
-  # to your endpoint configuration:
-  #
-  #     config :pii_guard, PiiGuardWeb.Endpoint,
-  #       https: [
-  #         ...,
-  #         port: 443,
-  #         cipher_suite: :strong,
-  #         keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
-  #         certfile: System.get_env("SOME_APP_SSL_CERT_PATH")
-  #       ]
-  #
-  # The `cipher_suite` is set to `:strong` to support only the
-  # latest and more secure SSL ciphers. This means old browsers
-  # and clients may not be supported. You can set it to
-  # `:compatible` for wider support.
-  #
-  # `:keyfile` and `:certfile` expect an absolute path to the key
-  # and cert in disk or a relative path inside priv, for example
-  # "priv/ssl/server.key". For all supported SSL configuration
-  # options, see https://hexdocs.pm/plug/Plug.SSL.html#configure/1
-  #
-  # We also recommend setting `force_ssl` in your endpoint, ensuring
-  # no data is ever sent via http, always redirecting to https:
-  #
-  #     config :pii_guard, PiiGuardWeb.Endpoint,
-  #       force_ssl: [hsts: true]
-  #
-  # Check `Plug.SSL` for all available options in `force_ssl`.
 end
+
+# Configure Slack
+config :pii_guard, PiiGuard.SlackBot,
+  app_token: System.get_env("SLACK_APP_TOKEN"),
+  bot_token: System.get_env("SLACK_BOT_TOKEN"),
+  user_token: System.get_env("SLACK_USER_TOKEN"),
+  bot: PiiGuard.SlackBot,
+  channels: [
+    types: ["public_channel"]
+  ],
+  # List of channels to monitor for PII (comma-separated)
+  monitored_channels: System.get_env("MONITORED_SLACK_CHANNELS", "")
+
+config :pii_guard, :notion_api_key, System.get_env("NOTION_API_KEY")
+config :pii_guard, :notion_verification_token, System.get_env("NOTION_VERIFICATION_TOKEN")
+
+config :openai,
+  # find it at https://platform.openai.com/account/api-keys
+  api_key: System.get_env("OPENAI_API_KEY"),
+  # find it at https://platform.openai.com/account/org-settings under "Organization ID"
+  organization_key: System.get_env("OPENAI_ORGANIZATION_KEY"),
+  # optional, use when required by an OpenAI API beta, e.g.:
+  beta: "assistants=v1",
+  # optional, passed to [HTTPoison.Request](https://hexdocs.pm/httpoison/HTTPoison.Request.html) options
+  http_options: [recv_timeout: 30_000]

@@ -39,7 +39,8 @@ defmodule PiiGuard.PiiDetector do
            messages: [
              %{
                role: "system",
-               content: "You are a PII detection assistant. Respond with ONLY 'true' or 'false'."
+               content:
+                 "You are a PII detection assistant. Your only job is to return 'true' or 'false' based on whether the input contains any kind of PII. Be conservative: even informal PII should be flagged as true."
              },
              %{
                role: "user",
