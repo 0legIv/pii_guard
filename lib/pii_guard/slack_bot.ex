@@ -6,7 +6,7 @@ defmodule PiiGuard.SlackBot do
   require Logger
 
   # Check if a channel is in the list of monitored channels.
-  defp is_monitored_channel?(channel_name) do
+  def is_monitored_channel?(channel_name) do
     # Get the list of monitored channels from config
     monitored_channels =
       Application.get_env(:pii_guard, PiiGuard.SlackBot)[:monitored_channels]
@@ -24,7 +24,7 @@ defmodule PiiGuard.SlackBot do
   end
 
   # Get channel name from channel ID
-  defp get_channel_name(channel_id) do
+  def get_channel_name(channel_id) do
     case Slack.API.get(
            "conversations.info",
            Application.get_env(:pii_guard, PiiGuard.SlackBot)[:bot_token],
@@ -201,7 +201,7 @@ defmodule PiiGuard.SlackBot do
   end
 
   # Send a notification to a user about PII in their message.
-  defp send_pii_notification(user, message, channel_name) do
+  def send_pii_notification(user, message, channel_name) do
     notification = """
     Your message in channel *#{channel_name}* contained Personally Identifiable Information (PII) and has been deleted:
 

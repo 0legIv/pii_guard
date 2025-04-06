@@ -12,23 +12,22 @@ defmodule PiiGuard.PiiDetector do
   """
   def contains_pii?(text) when is_binary(text) do
     prompt = """
-    Analyze the following text and determine if it contains any Personally Identifiable Information (PII).
-    PII includes but is not limited to:
-    - Full names
-    - Social security numbers
-    - Credit card numbers
-    - Bank account numbers
-    - Email addresses
-    - Phone numbers
-    - Physical addresses
-    - Date of birth
-    - Driver's license numbers
-    - Passport numbers
-    - IP addresses
-    - Medical records
-    - Biometric data
+    You are a PII detection assistant. Analyze the following text and determine if it contains any Personally Identifiable Information (PII).
 
-    Respond with ONLY "true" if PII is detected, or "false" if no PII is detected.
+    Consider these as PII (even if partial or informal):
+    - Full names (e.g. John Smith)
+    - Email addresses (e.g. user.name@example.co.uk)
+    - Phone numbers (e.g. +1-123-456-7890, 0888 123 456)
+    - Physical addresses (e.g. General Kolev 83 vh. V)
+    - Date of birth
+    - ID numbers (EGN, SSN, Passport, Driver's License)
+    - Credit card or bank account numbers
+    - IP addresses or MAC addresses
+    - Biometric or medical information
+
+    Respond ONLY with:
+    true — if the text contains any PII
+    false — if the text does not contain any PII
 
     Text to analyze:
     #{text}
@@ -40,7 +39,7 @@ defmodule PiiGuard.PiiDetector do
              %{
                role: "system",
                content:
-                 "You are a PII detection assistant. Your only job is to return 'true' or 'false' based on whether the input contains any kind of PII. Be conservative: even informal PII should be flagged as true."
+                 "You are a strict PII classifier. Respond ONLY with `true` or `false`. No explanation."
              },
              %{
                role: "user",

@@ -45,7 +45,9 @@ defmodule PiiGuard.MixProject do
       # HTTP client for API calls
       {:httpoison, "~> 2.2.2"},
       # For handling JSON
-      {:poison, "~> 6.0"}
+      {:poison, "~> 6.0"},
+      # For mocking in tests
+      {:mock, "~> 0.3.9", only: :test}
     ]
   end
 
